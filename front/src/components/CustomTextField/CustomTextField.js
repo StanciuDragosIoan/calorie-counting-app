@@ -1,11 +1,6 @@
-import { styled } from "@mui/material/styles";
-import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
-const StyledTextField = styled(TextField)`
-  .MuiInputBase-root {
-    background-color: #fff;
-  }
-`;
+import { StyledTextField } from "./StyledTextField";
+
 export const CustomTextField = ({
   id,
   placeholder,
@@ -21,7 +16,7 @@ export const CustomTextField = ({
         placeholder={placeholder}
         type={type}
         onChange={changeHandler}
-        value={typeof value === "string" ? value : ""}
+        value={typeof value === "string" || value > 0 ? value : ""}
       />
     </Grid>
   );

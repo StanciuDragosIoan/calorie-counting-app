@@ -1,13 +1,9 @@
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
-const mealStyles = {
-  border: "2px solid #fff",
-  borderRadius: "15px",
-  marginTop: "1rem",
-  marginBottom: "1rem",
-};
-export const MealItems = ({ items = [] }) => {
+import { MealItem } from "./MealItem/MealItem";
+
+export const MealItems = ({ items = [], deleteItem, editItem }) => {
   let totalCals = 0;
   let totalP = 0;
   items.map((i) => (totalCals += i.mealCals));
@@ -25,20 +21,12 @@ export const MealItems = ({ items = [] }) => {
         </Grid>
         {items.map((i) => {
           return (
-            <Grid style={mealStyles} item xs={12} md={7} key={Math.random()}>
-              <Typography variant="h5" component="div">
-                {i.mealItem}
-              </Typography>
-              <Typography variant="h6" component="div">
-                Qty: {i.mealQty} g
-              </Typography>
-              <Typography variant="h6" component="div">
-                Cal: {i.mealCals}
-              </Typography>
-              <Typography variant="h6" component="div">
-                Protein: {i.mealProtein}
-              </Typography>
-            </Grid>
+            <MealItem
+              item={i}
+              deleteItem={deleteItem}
+              editItem={editItem}
+              key={i._id}
+            />
           );
         })}
         <Grid item xs={12} md={7}>
