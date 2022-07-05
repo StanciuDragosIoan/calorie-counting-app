@@ -1,15 +1,34 @@
+import React, { useContext } from "react";
+
+import { MealItemsContext } from "../services/MealsService.service";
+
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
 import { MealItem } from "./MealItem/MealItem";
 
-export const MealItems = ({ items = [], deleteItem, editItem }) => {
+/*
+ * @MealItems (functional component)
+ *
+ * @props: {
+ *  deleteItem: function,
+ *  editItem: function,
+ *  idToEdit: string
+ * }
+ *
+ * @returns multiple MealItem components
+ * and passes down the delete and edit handlers to them
+ */
+
+export const MealItems = () => {
+  const { meals } = useContext(MealItemsContext);
+
   let totalCals = 0;
   let totalP = 0;
-  items.map((i) => (totalCals += i.mealCals));
-  items.map((i) => (totalP += i.mealProtein));
+  meals.map((i) => (totalCals += i.mealCals));
+  meals.map((i) => (totalP += i.mealProtein));
 
-  if (items.length === 0) {
+  if (meals.length === 0) {
     return;
   } else {
     return (
@@ -19,19 +38,12 @@ export const MealItems = ({ items = [], deleteItem, editItem }) => {
             Meal Items:
           </Typography>
         </Grid>
-        {items.map((i) => {
-          return (
-            <MealItem
-              item={i}
-              deleteItem={deleteItem}
-              editItem={editItem}
-              key={i._id}
-            />
-          );
+        {meals.map((i) => {
+          return <MealItem item={i} key={i._id} />;
         })}
         <Grid item xs={12} md={7}>
           <Typography variant="h4" component="div">
-            Meals Total Calories: {totalCals.toFixed(2)}
+            Total Calories: {totalCals.toFixed(2)}
             <br />({totalP.toFixed(2)} g Protein)
           </Typography>
         </Grid>

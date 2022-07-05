@@ -2,6 +2,9 @@ import { config } from "dotenv";
 const { mongoURI } = config().parsed;
 import mongoose from "mongoose";
 
+/*
+ * opens DB connection
+ */
 export const connectDB = () => {
   try {
     mongoose.connect(mongoURI);
@@ -11,6 +14,15 @@ export const connectDB = () => {
   }
 };
 
+/*
+ * adds item to the Meals table
+ *
+ * @params:
+ * {
+ *  payload (contains data used to create new DB meal item)
+ *  model: mongoose model (MealItem)
+ * }
+ */
 export const addItem = async (payload, model) => {
   connectDB();
   const { mealItem, mealQty, mealCals, mealProtein } = payload;
@@ -27,6 +39,14 @@ export const addItem = async (payload, model) => {
   }
 };
 
+/*
+ * gets meal items from DB
+ *
+ * @params:
+ * {
+ *    model: mongoose model (MealItem)
+ * }
+ */
 export const getItems = async (model) => {
   connectDB();
   try {
@@ -37,6 +57,14 @@ export const getItems = async (model) => {
   }
 };
 
+/*
+ * clears meal items from DB
+ *
+ * @params:
+ * {
+ *    model: mongoose model (MealItem)
+ * }
+ */
 export const clearItems = async (model) => {
   connectDB();
   try {
@@ -46,6 +74,15 @@ export const clearItems = async (model) => {
   }
 };
 
+/*
+ * removes 1 meal item from DB
+ *
+ * @params:
+ * {
+ *  id: string (id used to find the item to remove)
+ *  model: mongoose model (MealItem)
+ * }
+ */
 export const removeItem = async (id, model) => {
   connectDB();
   try {
@@ -55,6 +92,15 @@ export const removeItem = async (id, model) => {
   }
 };
 
+/*
+ * edits 1 meal item from DB
+ *
+ * @params:
+ * {
+ *  payload (contains id and data used to update DB meal item)
+ *  model: mongoose model (MealItem)
+ * }
+ */
 export const editItem = async (payload, model) => {
   connectDB();
   const { idToEdit: _id, mealItem, mealQty, mealCals, mealProtein } = payload;
