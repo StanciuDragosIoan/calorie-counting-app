@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 
-import { MealItemsContext } from "../../services/MealsService.service";
+import { MealItemsContext } from "../../state/MealItems.module";
 
 import { BasicButton } from "../BasicButton";
 import { Header } from "../Header";

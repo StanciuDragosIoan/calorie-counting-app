@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
-import { MealItemsContext } from "../../services/MealsService.service";
+import { MealItemsContext } from "../../state/MealItems.module";
 
 import { mealStyles, DeleteBtn, EditBtn } from "./MealItemStyles";
 

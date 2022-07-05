@@ -28,6 +28,7 @@ export const CustomTextField = ({
         id={id}
         variant="outlined"
         placeholder={placeholder}
+        color="outlineColor"
         type={type}
         onChange={changeHandler}
         value={typeof value === "string" || value > 0 ? value : ""}

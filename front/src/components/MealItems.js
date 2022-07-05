@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import { MealItemsContext } from "../services/MealsService.service";
+import { MealItemsContext } from "../state/MealItems.module";
 
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
