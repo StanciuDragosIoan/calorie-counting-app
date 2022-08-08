@@ -30,7 +30,13 @@ export const getTheme = ({ mode }) => {
               defaultColor: blue[200],
             },
             primary: {
-              main: green[800],
+              main: blue[500],
+            },
+            appBarColor: {
+              main: blue[400],
+            },
+            submitBtnColor: {
+              main: blue[300],
             },
             secondary: {
               main: purple[500],
@@ -53,6 +59,12 @@ export const getTheme = ({ mode }) => {
             },
             primary: {
               main: deepOrange[800],
+            },
+            appBarColor: {
+              main: `${indigo[600]}!important`,
+            },
+            submitBtnColor: {
+              main: `${indigo[300]}!important`,
             },
             secondary: {
               main: grey[400],

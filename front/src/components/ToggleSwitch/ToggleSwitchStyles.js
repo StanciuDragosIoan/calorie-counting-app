@@ -8,7 +8,7 @@ export const emojiStyle = {
   position: "absolute",
   top: 10,
   left: 60,
-  fontSize: "4rem",
+  fontSize: "3rem",
 };
 
 export const switchStyle = {

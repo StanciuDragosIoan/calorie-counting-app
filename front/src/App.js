@@ -1,13 +1,18 @@
 import React, { useContext } from "react";
 
-import { ThemeProvider } from "@mui/material/styles";
-import { MealItemsProvider } from "./state/MealItems.module";
-import { UIContext } from "./state/UI.module";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import { MainCard } from "./components/MainCard/MainCard";
-import { ToggleSwitch } from "./components/ToggleSwitch/ToggleSwitch";
+import { ThemeProvider } from "@mui/material/styles";
+import { UIContext } from "./state/UI.module";
 import { getTheme } from "./theme/Theme";
-import { Box } from "@mui/material";
+
+import { HomePage } from "./pages/Home.page";
+import { SignUpPage } from "./pages/SignUp.page";
+import { CaloriesPage } from "./pages/Calories.page";
+import { ProfilePage } from "./pages/Profile.page";
+
+import { NotFoundPage as NotFound } from "./pages/NotFound.page";
+import { Test as TestPage } from "./pages/Test.page";
 
 function App() {
   const { mode } = useContext(UIContext);
@@ -16,20 +21,16 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box
-        sx={{
-          bgcolor: "background.defaultColor",
-          p: 0,
-          m: -1,
-        }}
-      >
-        <ToggleSwitch />
-        <div className="App">
-          <MealItemsProvider>
-            <MainCard />
-          </MealItemsProvider>
-        </div>
-      </Box>
+      <BrowserRouter>
+        <Routes>
+          <Route path="*" element={<NotFound />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/calories" element={<CaloriesPage />} />
+          <Route path="test" element={<TestPage />} />
+        </Routes>
+      </BrowserRouter>
     </ThemeProvider>
   );
 }
