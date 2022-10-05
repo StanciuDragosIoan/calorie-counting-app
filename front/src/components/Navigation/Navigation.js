@@ -69,8 +69,6 @@ export const Navigation = () => {
           <Typography
             variant="h6"
             noWrap
-            component="a"
-            href="/"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -81,7 +79,15 @@ export const Navigation = () => {
               textDecoration: "none",
             }}
           >
-            {appTitle}
+            <Link
+              to="/"
+              style={{
+                ...linkStyles,
+                color: mode === "dark" ? "#fff" : "#000",
+              }}
+            >
+              {appTitle}
+            </Link>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>

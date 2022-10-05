@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import { Box } from "@mui/material";
-import Typography from "@mui/material/Typography";
 
 import { Navigation } from "../components/Navigation/Navigation";
 import { MainCard } from "../components/MainCard/MainCard";
+import { LoginForm } from "../components/LoginForm";
+
+import { UserContext } from "../state/User.module";
 
 import { MealItemsProvider } from "../state/MealItems.module";
 
@@ -14,6 +16,8 @@ import { MealItemsProvider } from "../state/MealItems.module";
  */
 
 export const CaloriesPage = () => {
+  const { token } = useContext(UserContext);
+
   return (
     <Box
       sx={{
@@ -25,9 +29,16 @@ export const CaloriesPage = () => {
     >
       <div className="App">
         <Navigation />
-        <MealItemsProvider>
-          <MainCard />
-        </MealItemsProvider>
+        {token ? (
+          <MealItemsProvider>
+            <MainCard />
+          </MealItemsProvider>
+        ) : (
+          <>
+            <br />
+            <LoginForm />
+          </>
+        )}
       </div>
     </Box>
   );

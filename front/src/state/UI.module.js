@@ -3,6 +3,10 @@ import React, { createContext, useEffect, useState } from "react";
 import { storeItem, getItem } from "../services/ClientStorage";
 export const UIContext = createContext();
 
+/*
+ * State module for handling UI elements globally thoroughout our app
+ */
+
 export const UIContextProvider = ({ children }) => {
   const [mode, setMode] = useState("light");
 
