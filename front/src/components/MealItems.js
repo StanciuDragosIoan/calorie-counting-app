@@ -6,6 +6,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
 import { MealItem } from "./MealItem/MealItem";
+import { UserContext } from "../state/User.module";
 
 /*
  * @MealItems (functional component)
@@ -22,6 +23,7 @@ import { MealItem } from "./MealItem/MealItem";
 
 export const MealItems = () => {
   const { meals } = useContext(MealItemsContext);
+ 
 
   let totalCals = 0;
   let totalP = 0;
@@ -31,6 +33,7 @@ export const MealItems = () => {
   if (meals.length === 0) {
     return;
   } else {
+
     return (
       <Grid container spacing={1} justifyContent="center">
         <Grid item xs={12} md={7}>

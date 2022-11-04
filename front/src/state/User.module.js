@@ -1,4 +1,6 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect, useContext } from "react";
+import { getItem } from "../services/ClientStorage";
+import { MealItemsContext } from "./MealItems.module";
 export const UserContext = createContext();
 
 /*
@@ -6,12 +8,24 @@ export const UserContext = createContext();
  */
 
 export const UserContextProvider = ({ children }) => {
-  const [token, setToken] = useState();
+  const storedToken = getItem('token');
+  const storedUserId = getItem('userId');
+  const [token, setToken] = useState(storedToken);
+  const [userId, setUserId] = useState(storedUserId);
+
+  useEffect(() => {
+    const isUserId = getItem('userId');
+    if(isUserId) {
+      setUserId(isUserId);
+    }
+  }, [userId]);
   return (
     <UserContext.Provider
       value={{
         token,
         setToken,
+        userId,
+        setUserId,
       }}
     >
       {children}

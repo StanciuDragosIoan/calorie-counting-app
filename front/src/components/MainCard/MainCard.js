@@ -1,9 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 
 import { MealItemsContext } from "../../state/MealItems.module";
-
 import { BasicButton } from "../BasicButton";
 import { Header } from "../Header";
 import { CustomTextField } from "../CustomTextField/CustomTextField";
@@ -34,9 +33,10 @@ export const MainCard = () => {
     setMealCals,
     saveEditMeal,
     cancelEdit,
-    saveMeal,
+    saveMeal
   } = useContext(MealItemsContext);
-
+  
+ 
   return (
     <Box>
       <Grid container spacing={1} justifyContent="center">

@@ -10,7 +10,7 @@ import { HomePage } from "./pages/Home.page";
 import { SignUpPage } from "./pages/SignUp.page";
 import { CaloriesPage } from "./pages/Calories.page";
 import { ProfilePage } from "./pages/Profile.page";
-
+import { LogOut } from "./pages/LogOut.page";
 import { NotFoundPage as NotFound } from "./pages/NotFound.page";
 import { Test as TestPage } from "./pages/Test.page";
 
@@ -28,6 +28,7 @@ function App() {
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/calories" element={<CaloriesPage />} />
+          <Route path="/logout" element={<LogOut />} />
           <Route path="test" element={<TestPage />} />
         </Routes>
       </BrowserRouter>

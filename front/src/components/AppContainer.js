@@ -15,7 +15,9 @@ import { UserContext } from "../state/User.module";
  *
  */
 export const AppContainer = () => {
+
   const { token } = useContext(UserContext);
+ 
   return (
     <Box
       component="div"
@@ -50,10 +52,7 @@ export const AppContainer = () => {
         <>
           <br />
           <LoginForm />
-        </>
-      )}
-
-      <Typography
+          <Typography
         variant="h5"
         component="div"
         color="#fff"
@@ -71,6 +70,9 @@ export const AppContainer = () => {
           </Link>
         </Button>
       </div>
+        </>
+      )}
+
     </Box>
   );
 };

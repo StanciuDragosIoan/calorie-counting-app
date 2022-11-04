@@ -16,9 +16,11 @@ export const mealRoutes = express();
  * GET /meals
  *
  * @returns array of meal items
+ * @gets userId as queryString parameter
  */
 mealRoutes.get("/meals", async (req, res) => {
-  const meals = await getItems(MealItem);
+  const { userid } = req.headers;
+  const meals = await getItems(MealItem, userid);
   return res.send(meals);
 });
 

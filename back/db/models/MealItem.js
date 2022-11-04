@@ -4,6 +4,7 @@ import mongoose from "mongoose";
  * MealItemSchema (object schema for the MealItem element)
  */
 const MealItemSchema = {
+  userId: String,
   mealItem: String,
   mealQty: Number,
   mealCals: Number,

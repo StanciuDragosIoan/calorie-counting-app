@@ -1,7 +1,7 @@
 import { config } from "dotenv";
 const { mongoURI } = config().parsed;
 import mongoose from "mongoose";
-
+import bcrypt from "bcrypt";
 /*
  * opens DB connection
  */
@@ -25,8 +25,9 @@ export const connectDB = () => {
  */
 export const addItem = async (payload, model) => {
   connectDB();
-  const { mealItem, mealQty, mealCals, mealProtein } = payload;
+  const { mealItem, mealQty, mealCals, mealProtein, userId } = payload;
   const newMealItem = new model({
+    userId,
     mealItem,
     mealQty,
     mealCals,
@@ -45,12 +46,13 @@ export const addItem = async (payload, model) => {
  * @params:
  * {
  *    model: mongoose model (MealItem)
+ *    userId: string (user id)
  * }
  */
-export const getItems = async (model) => {
+export const getItems = async (model, userId) => {
   connectDB();
   try {
-    const meals = await model.find({});
+    const meals = await model.find({ userId });
     return meals;
   } catch (err) {
     console.log(err);
@@ -111,5 +113,64 @@ export const editItem = async (payload, model) => {
     );
   } catch (err) {
     console.log(err);
+  }
+};
+
+/*
+ * logs user in
+ *
+ * @params:
+ * {
+ *  payload (contains user credentials)
+ *  model: mongoose model (User)
+ * }
+ */
+export const logIn = async (credentials, model) => {
+  try { 
+      const { email, password } = credentials;
+      const usr = await model.find({email}).exec();
+      const correctPass = await bcrypt.compare(password, usr[0].password);
+      if(correctPass){
+        return { token: "someTokenHere", userId: usr[0]._id };
+      } else {
+        return { msg: "bad credentials" };
+      }
+  
+  } catch(err){
+    console.log(err);
+    return 'someErr';
+  }
+};
+
+/*
+ * signs user up
+ *
+ * @params:
+ * {
+ *  payload (contains user credentials)
+ *  model: mongoose model (User)
+ * }
+ */
+export const signUp = async (credentials, model) => {
+  const { email, password } = credentials;
+  const saltRounds = 10;
+
+  const encrptedPass = await bcrypt.hash(password, saltRounds);
+
+  const userId =
+    Math.random().toString(12).substring(2, 17) +
+    Math.random().toString(12).substring(2, 17);
+  const newUser = new model({
+    userId,
+    email,
+    password: encrptedPass,
+  });
+
+  try {
+    await newUser.save();
+    return { msg: "user signed up successfully" };
+  } catch (err) {
+    console.log(err);
+    return { msg: "some error occurred at signUp" };
   }
 };

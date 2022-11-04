@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState, useContext } from "react";
 
 import { getData, postData } from "./http";
 
@@ -27,16 +27,14 @@ export const MealItemsProvider = ({ children }) => {
 
   const deleteItem = async (id) => {
     setIsLoading(true);
-    const resData = await postData(`http://localhost:4000/meals/${id}`);
-    console.log(resData);
+    await postData(`http://localhost:4000/meals/${id}`);
     setIsLoading(false);
     await fetchItems();
   };
 
   const deleteMeals = async () => {
     setIsLoading(true);
-    const resData = await postData("http://localhost:4000/meals/clearAll");
-    console.log(resData);
+    await postData("http://localhost:4000/meals/clearAll");
     setIsLoading(false);
     setMeals([]);
     clearInput();
@@ -67,20 +65,18 @@ export const MealItemsProvider = ({ children }) => {
   const saveEditMeal = async () => {
     const editItem = processMealInput();
     editItem.idToEdit = idToEdit;
-    const resData = await postData("http://localhost:4000/edit/meal", editItem);
-    await fetchItems();
-    console.log(resData);
+    await postData("http://localhost:4000/edit/meal", editItem);
+    await fetchItems(); 
     setId(null);
   };
 
   const saveMeal = async () => {
     const newMealItem = processMealInput();
     if (newMealItem) {
-      const resData = await postData(
+      await postData(
         "http://localhost:4000/meals",
         newMealItem
       );
-      console.log(resData);
       await fetchItems();
     }
   };

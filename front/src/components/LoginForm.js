@@ -5,26 +5,66 @@ import { CustomTextField } from "./CustomTextField/CustomTextField";
 import { Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import { Box } from "@mui/material";
-
+import { Alert } from "./Alert";
+import { postData } from "../services/http";
 import { UserContext } from "../state/User.module";
-
+import { validateEmail, validatePassword } from "../utils/utils";
+import { storeItem } from "../services/ClientStorage"; 
 /*
  * @LoginForm (functional component)
  */
 export const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [alert, setAlert] = useState(null);
+  const { setToken, setUserId } = useContext(UserContext);
+ 
 
-  const { setToken } = useContext(UserContext);
+  //signIn method
+  const signIn = async (credentials) => {
+    const url = "http://localhost:4000/signin";
+    const resData = await postData(url, credentials);
+    return resData;
+  };
 
-  const logIn = () => {
+
+
+  const logIn = async () => {
+
+    
     const userCredentials = {
       email,
       password,
     };
-    console.log(userCredentials);
-    setToken("someToken");
+    if (!email || !password) {
+      console.error("no credentials were input! X__X");
+      setAlert(
+        "Bad email or weak password (1 lowercase char, 1 uppercase, 1 special symbol, 1 digit, minim 5 chars at least)"
+      );
+    } else {
+      if (validateEmail(email) && validatePassword(password)) {
+        setAlert(null);
+        const resData = await signIn(userCredentials);
+     
+        if (resData.token) {
+          setToken(resData.token);
+          setUserId(resData.userId);
+          storeItem('userId', resData.userId);
+          storeItem('token', resData.token);
+          window.location.reload(false);
+        } else {
+          setAlert("Bad credentials X___X!");
+          setTimeout(() => {
+            setAlert(null);
+          }, 3000);
+        }
+      }
+    }
   };
+
+
+
+ 
 
   return (
     <Box
@@ -40,6 +80,7 @@ export const LoginForm = () => {
       noValidate
       autoComplete="off"
     >
+      <Alert msg={alert} />
       <Item
         sx={{
           maxWidth: "25rem",

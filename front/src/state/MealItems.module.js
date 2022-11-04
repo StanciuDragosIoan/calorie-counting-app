@@ -1,6 +1,6 @@
-import React, { createContext, useEffect, useState } from "react";
-
-import { getData, postData } from "../services/http";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { UserContext } from "./User.module";
+import { getData, postData } from "../services/http"; 
 
 export const MealItemsContext = createContext();
 
@@ -9,6 +9,8 @@ export const MealItemsContext = createContext();
  */
 
 export const MealItemsProvider = ({ children }) => {
+  //user id
+  const { userId } = useContext(UserContext);
   //state
   const [meals, setMeals] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -18,25 +20,24 @@ export const MealItemsProvider = ({ children }) => {
   const [mealProtein, setProtein] = useState(0);
   const [idToEdit, setId] = useState(null);
 
+
   const fetchItems = async () => {
     setIsLoading(true);
-    const items = await getData("http://localhost:4000/meals");
+    const items = await getData('http://localhost:4000/meals');
     setIsLoading(false);
     setMeals(items);
   };
 
   const deleteItem = async (id) => {
     setIsLoading(true);
-    const resData = await postData(`http://localhost:4000/meals/${id}`);
-    console.log(resData);
+    await postData(`http://localhost:4000/meals/${id}`);
     setIsLoading(false);
     await fetchItems();
   };
 
   const deleteMeals = async () => {
     setIsLoading(true);
-    const resData = await postData("http://localhost:4000/meals/clearAll");
-    console.log(resData);
+    await postData("http://localhost:4000/meals/clearAll");
     setIsLoading(false);
     setMeals([]);
     clearInput();
@@ -67,20 +68,19 @@ export const MealItemsProvider = ({ children }) => {
   const saveEditMeal = async () => {
     const editItem = processMealInput();
     editItem.idToEdit = idToEdit;
-    const resData = await postData("http://localhost:4000/edit/meal", editItem);
+    await postData("http://localhost:4000/edit/meal", editItem);
     await fetchItems();
-    console.log(resData);
     setId(null);
   };
 
   const saveMeal = async () => {
     const newMealItem = processMealInput();
+    newMealItem.userId = userId;
     if (newMealItem) {
-      const resData = await postData(
+      await postData(
         "http://localhost:4000/meals",
         newMealItem
       );
-      console.log(resData);
       await fetchItems();
     }
   };
@@ -101,6 +101,7 @@ export const MealItemsProvider = ({ children }) => {
       return newMealItem;
     }
   };
+
 
   useEffect(() => {
     fetchItems();
@@ -129,6 +130,7 @@ export const MealItemsProvider = ({ children }) => {
         setProtein,
         mealCals,
         setMealCals,
+        setMeals,
       }}
     >
       {children}

@@ -3,14 +3,16 @@ import cors from "cors";
 
 //routes
 import { mealRoutes } from "./routes/meals.js";
+import { userRoutes } from "./routes/auth.js";
 
 //app config
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-//mount mealRoutes
+//mount routes
 app.use("/", mealRoutes);
+app.use("/", userRoutes);
 
 //universal request handler
 app.use("*", (req, res) => {

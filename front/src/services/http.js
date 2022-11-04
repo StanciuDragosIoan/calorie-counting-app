@@ -1,3 +1,8 @@
+import { getItem } from './ClientStorage';
+
+const userId = getItem('userId');
+ 
+
 export const postData = async (url, payload = {}) => {
   const res = await fetch(url, {
     method: "POST",
@@ -12,11 +17,12 @@ export const postData = async (url, payload = {}) => {
 };
 
 export const getData = async (url) => {
-  const rawData = await fetch("http://localhost:4000/meals", {
+  const rawData = await fetch(url, {
     method: "GET",
     headers: {
       Accept: "application/json, text/plain, */*",
       "Content-Type": "application/json",
+      userId,
     },
   });
   const serialisedData = await rawData.json();
